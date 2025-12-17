@@ -8,7 +8,7 @@ export default function Header() {
   return (
     <header className="flex items-center justify-between bg-slate-900 px-6 py-4 text-white shadow-md">
       <div>
-        <h1 className="text-xl font-bold tracking-wide">Event Manager</h1>
+        <h1 className="text-xl font-bold tracking-wide">Gerenciador de Eventos</h1>
       </div>
 
       <nav className="flex items-center gap-4">

@@ -1,14 +1,12 @@
-"use client"; // ⚠️ Obrigatório: Contexto precisa rodar no navegador
+"use client";
 
 import { createContext, useContext, useState, ReactNode } from "react";
 
-// Definindo o formato do Usuário
 interface User {
   name: string;
   email: string;
 }
 
-// Definindo o que o nosso Contexto vai expor para os componentes
 interface AuthContextType {
   user: User | null; // Se null, não tá logado
   login: () => void;
