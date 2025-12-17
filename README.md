@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+📅 Gerenciador de Eventos (Next.js 15+)
 
-## Getting Started
+Sistema de gerenciamento de eventos desenvolvido como desafio técnico. O projeto permite visualizar, buscar e cadastrar eventos, utilizando uma arquitetura moderna com **Next.js 15 (App Router)** e **Server Components**.
 
-First, run the development server:
+## 🚀 Tecnologias
 
-```bash
+- **Framework:** Next.js 15.0+ (App Router)
+- **Linguagem:** TypeScript
+- **Estilização:** Tailwind CSS
+- **Estado Global:** React Context API (Auth Mock)
+- **API:** Next.js API Routes (Backend Mockado)
+- **Validação:** HTML5 nativo + FormData
+
+## ⚙️ Funcionalidades
+
+- [x] **Listagem de Eventos:** Renderização no servidor (SSR) para melhor SEO e performance.
+- [x] **Busca:** Filtragem por nome ou categoria via URL Search Params.
+- [x] **Detalhes:** Rotas dinâmicas (`/events/[id]`) com dados atualizados.
+- [x] **Cadastro:** Formulário integrado com API Mock (POST).
+- [x] **Autenticação Simulada:** Login/Logout via Context API.
+- [x] **Design Responsivo:** Layout fluido para Mobile e Desktop.
+
+## 📦 Como rodar o projeto
+
+1. **Clone o repositório:**
+   ```bash
+   git clone [https://github.com/SEU-USUARIO/event-manager-next.git](https://github.com/SEU-USUARIO/event-manager-next.git)
+   cd event-manager-next
+Instale as dependências:
+
+Bash
+
+npm install
+Rode o servidor de desenvolvimento:
+
+Bash
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Acesse: abra http://localhost:3000 no seu navegador.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+📂 Estrutura do Projeto
+src/
+├── app/              # Rotas e Páginas (App Router)
+│   ├── api/          # Rotas de API (Backend Mock)
+│   ├── events/       # Rotas de Eventos (Detalhes e Novo)
+│   └── page.tsx      # Página Inicial
+├── components/       # Componentes reutilizáveis (Header, Cards, Inputs)
+├── contexts/         # Gerenciamento de estado (Auth)
+├── data/             # Persistência de dados em memória
+├── services/         # Camada de integração com API (Fetch)
+├── types/            # Definições de Tipos TypeScript
+└── styles/           # Estilos globais
+📝 Notas do Desenvolvedor
+Persistência de Dados: Como este é um desafio técnico sem banco de dados externo, a persistência é feita em memória. Se o servidor reiniciar, os dados voltam ao estado inicial.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Next.js 15: O projeto utiliza estritamente as novas convenções do Next 15, como await params em rotas dinâmicas e cache: 'no-store' para dados em tempo real.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Feito com 💙 por [Seu Nome]
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 🚀 Tarefa Bônus: DOC-01 – Arquivo SQL de Referência
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Prioridade:** 🟧 P1
+**Objetivo:** Mostrar que você sabe SQL, mesmo não usando banco de dados no projeto.
 
-## Deploy on Vercel
+Crie a pasta `database` na raiz e dentro dela o arquivo `events.sql`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```sql
+-- Arquivo de referência para futura migração para PostgreSQL
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE events (
+  id SERIAL PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  location VARCHAR(255) NOT NULL,
+  date DATE NOT NULL,
+  category VARCHAR(100) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Exemplo de Insert
+INSERT INTO events (title, location, date, category) 
+VALUES ('Workshop Next.js', 'Online', '2025-10-10', 'Educação');
