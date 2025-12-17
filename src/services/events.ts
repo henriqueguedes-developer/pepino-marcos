@@ -25,16 +25,28 @@ const MOCK_EVENTS: Event[] = [
   },
 ];
 
-
-// Função que simula a chamada à API
-export async function getEvents(): Promise<Event[]> {
+// Função atualizada para aceitar busca!
+export async function getEvents(query?: string): Promise<Event[]> {
   // Simula delay de rede
   await new Promise((resolve) => setTimeout(resolve, 1000));
   
-  return MOCK_EVENTS;
+  // Começamos assumindo que retornaremos todos
+  let filteredEvents = MOCK_EVENTS;
+
+  // Se o usuário mandou uma busca, filtramos a lista
+  if (query) {
+    const lowerQuery = query.toLowerCase();
+    filteredEvents = filteredEvents.filter((event) => 
+      // Busca no Título OU na Categoria
+      event.title.toLowerCase().includes(lowerQuery) || 
+      event.category.toLowerCase().includes(lowerQuery)
+    );
+  }
+
+  return filteredEvents;
 }
 
-// Já vamos deixar pronta a função para buscar um único evento (será usada na FE-06)
+// Função para buscar um único evento (será usada na FE-06)
 export async function getEventById(id: number): Promise<Event | undefined> {
   await new Promise((resolve) => setTimeout(resolve, 500));
   return MOCK_EVENTS.find((event) => event.id === id);
