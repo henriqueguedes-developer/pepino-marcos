@@ -2,7 +2,7 @@ import { GET, POST } from './route';
 import { NextRequest } from 'next/server';
 
 
-function mockRequest(method: string, url: string, body?: any) {
+function mockRequest(method: string, url: string, body?: Record<string, unknown>) {
 
   const headers = new Headers();
   if (body) {

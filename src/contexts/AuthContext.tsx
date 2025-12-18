@@ -35,8 +35,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // 2. O toast.promise gerencia o visual baseado na promessa acima
     await toast.promise(loginPromise, {
       loading: 'Verificando credenciais...',
-      success: (msg: any) => `${msg}`,
-      error: (err: any) => `${err.message}`,
+      success: (msg: string) => `${msg}`,
+      error: (err: Error) => `${err.message}`,
     })
     .then(() => {
       setUser({ name: "Admin Iplan", email });

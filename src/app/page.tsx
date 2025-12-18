@@ -10,10 +10,10 @@ interface HomeProps {
 
 export default async function Home(props: HomeProps) {
   const searchParams = await props.searchParams;
-  
+
   const query = searchParams.q;
   // 1. Pega o número da página (ou usa 1 como padrão)
-  const page = Number(searchParams.page) || 1; 
+  const page = Number(searchParams.page) || 1;
 
   // 2. Busca os dados paginados (Agora desestruturamos o retorno)
   // 'events' recebe o array de dados, e 'totalPages' o número de páginas
@@ -30,7 +30,7 @@ export default async function Home(props: HomeProps) {
 
       {events.length === 0 ? (
         <div className="text-center text-slate-500 py-10">
-          Nenhum evento encontrado para "{query}".
+          Nenhum evento encontrado para &quot;{query}&quot;.
         </div>
       ) : (
         <>
