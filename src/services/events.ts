@@ -1,6 +1,6 @@
 import { Event } from "@/types";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "/api";
 
 // Busca todos os eventos (com suporte a filtro)
 export async function getEvents(query?: string, page: number = 1) {
