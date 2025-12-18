@@ -22,7 +22,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsLoading(true);
 
     // 1. Promessa da validação
-    const loginPromise = new Promise((resolve, reject) => {
+    const loginPromise = new Promise<string>((resolve, reject) => {
       setTimeout(() => {
         if (pass === "123456") {
           resolve("Bem-vindo");
