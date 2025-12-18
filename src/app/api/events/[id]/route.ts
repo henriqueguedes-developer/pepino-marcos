@@ -1,23 +1,22 @@
 import { NextResponse } from "next/server";
-import { events } from "@/data/events"; // Importa o mesmo banco
+import { events } from "@/data/events";
 
+// GET: Busca um só
 export async function GET(
   request: Request,
-  { params }: { params: Promise<{ id: string }> } // Tipagem correta do Next 15
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = await params; // Aguarda o parametro
-
-  // Busca no array
+  const { id } = await params;
   const event = events.find((e) => e.id === Number(id));
 
-  // Se não achar, retorna 404
   if (!event) {
     return NextResponse.json({ message: "Evento não encontrado" }, { status: 404 });
   }
 
   return NextResponse.json(event);
 }
-// ADICIONANDO DELETE
+
+// DELETE: Apaga (Isso resolve o erro 404 se o evento existir) 👇
 export async function DELETE(
   request: Request,
   { params }: { params: Promise<{ id: string }> }

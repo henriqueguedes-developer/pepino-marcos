@@ -1,27 +1,43 @@
 import { NextResponse } from "next/server";
-import { Event } from "@/types";
 import { events } from "@/data/events";
+import { Event } from "@/types";
 
-export async function GET() {
-  return NextResponse.json(events);
+// GET: Lista com Paginação
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  
+  const query = searchParams.get("q")?.toLowerCase() || "";
+  const page = parseInt(searchParams.get("page") || "1");
+  const limit = parseInt(searchParams.get("limit") || "6");
+
+  const filteredEvents = events.filter(
+    (event) =>
+      event.title.toLowerCase().includes(query) ||
+      event.category.toLowerCase().includes(query)
+  );
+
+  const startIndex = (page - 1) * limit;
+  const endIndex = startIndex + limit;
+  const paginatedEvents = filteredEvents.slice(startIndex, endIndex);
+
+  return NextResponse.json({
+    data: paginatedEvents,
+    total: filteredEvents.length,
+    page,
+    totalPages: Math.ceil(filteredEvents.length / limit),
+  });
 }
 
+// POST: Criação de Evento (Isso resolve o erro 405) 👇
 export async function POST(request: Request) {
   const body = await request.json();
 
-  if (!body.title || !body.date) {
-    return NextResponse.json({ message: "Dados incompletos" }, { status: 400 });
-  }
-
   const newEvent: Event = {
-    id: Date.now(), // Gera um ID único baseado no tempo (melhor que length + 1)
-    title: body.title,
-    location: body.location,
-    date: body.date,
-    category: body.category,
+    id: events.length + 1, // Gera ID simples
+    ...body,
   };
 
-  events.push(newEvent); // Salva no array compartilhado
+  events.push(newEvent);
 
   return NextResponse.json(newEvent, { status: 201 });
 }

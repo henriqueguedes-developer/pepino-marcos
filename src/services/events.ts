@@ -3,30 +3,23 @@ import { Event } from "@/types";
 const BASE_URL = "http://localhost:3000/api";
 
 // Busca todos os eventos (com suporte a filtro)
-export async function getEvents(query?: string): Promise<Event[]> {
+export async function getEvents(query?: string, page: number = 1) {
   const url = new URL(`${BASE_URL}/events`);
   
-  // Adiciona cache: 'no-store' garante que sempre busque dados frescos do servidor
-  // Essencial para ver o evento novo assim que criarmos!
-  const response = await fetch(url.toString(), { cache: "no-store" });
-  
-  if (!response.ok) {
+  if (query) url.searchParams.append("q", query);
+  url.searchParams.append("page", page.toString());
+  url.searchParams.append("limit", "6"); // Definimos 6 por página fixo
+
+  const res = await fetch(url.toString(), {
+    cache: "no-store",
+  });
+
+  if (!res.ok) {
     throw new Error("Falha ao buscar eventos");
   }
 
-  const events: Event[] = await response.json();
-
-  // Filtragem no lado do cliente (simples) ou backend (ideal). 
-  // Como nossa API Mock retorna tudo, mantemos o filtro aqui por segurança.
-  if (query) {
-    const lowerQuery = query.toLowerCase();
-    return events.filter((event) => 
-      event.title.toLowerCase().includes(lowerQuery) || 
-      event.category.toLowerCase().includes(lowerQuery)
-    );
-  }
-
-  return events;
+  // Agora retorna { data: Event[], total: number, totalPages: number }
+  return res.json();
 }
 
 // Busca evento por ID
