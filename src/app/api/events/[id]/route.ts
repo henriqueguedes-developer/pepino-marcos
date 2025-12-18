@@ -17,3 +17,18 @@ export async function GET(
 
   return NextResponse.json(event);
 }
+// ADICIONANDO DELETE
+export async function DELETE(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+  const index = events.findIndex((e) => e.id === Number(id));
+
+  if (index === -1) {
+    return NextResponse.json({ message: "Evento não encontrado" }, { status: 404 });
+  }
+
+  events.splice(index, 1);
+  return NextResponse.json({ message: "Deletado com sucesso" });
+}

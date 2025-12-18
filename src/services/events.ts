@@ -56,3 +56,13 @@ export async function createEvent(eventData: Partial<Event>): Promise<Event> {
 
   return response.json();
 }
+// ADICIONANDO DELETES
+export async function deleteEvent(id: number): Promise<void> {
+  const response = await fetch(`${BASE_URL}/events/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    throw new Error("Falha ao deletar evento");
+  }
+}

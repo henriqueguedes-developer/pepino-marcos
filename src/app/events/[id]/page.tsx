@@ -1,6 +1,7 @@
 import { getEventById } from "@/services/events";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import DeleteButton from "@/components/DeleteButton"; // 👈 1. Importamos aqui
 
 interface EventDetailsProps {
   params: Promise<{
@@ -9,20 +10,15 @@ interface EventDetailsProps {
 }
 
 export default async function EventDetails({ params }: EventDetailsProps) {
-  // 1. Desembrulha os parâmetros da URL (Next 15 exigência)
   const { id } = await params;
-
-  // 2. Busca o evento pelo ID (convertendo string para number)
   const event = await getEventById(Number(id));
 
-  // 3. Se não achar (ex: /events/999), joga para a página 404 padrão
   if (!event) {
     notFound();
   }
 
   return (
     <div className="mx-auto max-w-3xl">
-      {/* Botão Voltar */}
       <div className="mb-6">
         <Link 
           href="/" 
@@ -32,7 +28,6 @@ export default async function EventDetails({ params }: EventDetailsProps) {
         </Link>
       </div>
 
-      {/* Cabeçalho do Evento */}
       <div className="mb-8 rounded-xl bg-slate-900 p-8 text-white shadow-lg">
         <span className="mb-2 inline-block rounded-full bg-blue-600 px-3 py-1 text-xs font-bold uppercase tracking-wider">
           {event.category}
@@ -48,7 +43,6 @@ export default async function EventDetails({ params }: EventDetailsProps) {
         </div>
       </div>
 
-      {/* Detalhes / Descrição (Placeholder, já que nosso mock é simples) */}
       <div className="rounded-lg border border-slate-200 bg-white p-8 shadow-sm">
         <h2 className="mb-4 text-xl font-bold text-slate-900">Sobre o evento</h2>
         <p className="leading-relaxed text-slate-600">
@@ -58,10 +52,13 @@ export default async function EventDetails({ params }: EventDetailsProps) {
           consequat.
         </p>
         
-        <div className="mt-8 border-t border-slate-100 pt-6">
+        {/* 👇 2. Adicionamos o container flex e o botão Delete aqui */}
+        <div className="mt-8 border-t border-slate-100 pt-6 flex flex-col gap-4 sm:flex-row">
            <button className="w-full rounded bg-green-600 py-3 text-lg font-semibold text-white transition hover:bg-green-700 sm:w-auto sm:px-8">
              Inscrever-se agora
            </button>
+           
+           <DeleteButton eventId={event.id} />
         </div>
       </div>
     </div>
