@@ -52,19 +52,22 @@ Para testar as funcionalidades administrativas (Criar e Excluir eventos), utiliz
 
 1. **Clone o repositório:**
    ```bash
-   git clone [https://github.com/marcos-lima-dev/desafio-tecnico-analista-de-sistemas-Junior-front-end.git](https://github.com/marcos-lima-dev/desafio-tecnico-analista-de-sistemas-Junior-front-end.git)
+   git clone https://github.com/marcos-lima-dev/desafio-tecnico-analista-de-sistemas-Junior-front-end.git   
    cd desafio-tecnico-analista-de-sistemas-Junior-front-end
-Instale as dependências:
+   Instale as dependências:
+   
+   Bash
 
-Bash
+   npm install
+   Rode o servidor de desenvolvimento:
 
-npm install
-Rode o servidor de desenvolvimento:
+   Bash
 
-Bash
+   npm run dev
+   Acesse: abra http://localhost:3000 no seu navegador.
 
-npm run dev
-Acesse: abra http://localhost:3000 no seu navegador.
+
+
 
 📝 Notas do Desenvolvedor
 Persistência de Dados: Como este é um desafio técnico com foco em Front-end, não foi utilizado banco de dados externo. A persistência é feita em memória (src/data/events.ts).
