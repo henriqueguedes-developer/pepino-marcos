@@ -1,47 +1,53 @@
 "use client";
 
 import { createContext, useContext, useState, ReactNode } from "react";
-
-interface User {
-  name: string;
-  email: string;
-}
+import { useRouter } from "next/navigation";
 
 interface AuthContextType {
-  user: User | null; // Se null, não tá logado
-  login: () => void;
+  user: { name: string; email: string } | null;
+  login: (email: string, pass: string) => Promise<void>; // Agora login retorna uma Promise
   logout: () => void;
+  isLoading: boolean;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext({} as AuthContextType);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const router = useRouter();
+  const [user, setUser] = useState<{ name: string; email: string } | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const login = () => {
-    // Simulando um SSO: setamos o usuário direto "na mão"
-    setUser({
-      name: "Dev Senior",
-      email: "dev@eventmanager.com",
-    });
-  };
+  async function login(email: string, pass: string) {
+    setIsLoading(true);
+    
+    // Simula um delay de rede (pra dar aquele suspense gostoso)
+    await new Promise((resolve) => setTimeout(resolve, 1500));
 
-  const logout = () => {
+    try {
+      // Validação "Hardcoded" (O segredo do Master Chef)
+      if (pass === "123456") {
+        setUser({ name: "Admin Iplan", email });
+        router.push("/"); // Manda pra home logado
+      } else {
+        throw new Error("Senha incorreta (Dica: 123456)");
+      }
+    } catch (error) {
+      throw error; // Joga o erro pra página de login tratar
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  function logout() {
     setUser(null);
-  };
+    router.push("/login");
+  }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, isLoading }}>
       {children}
     </AuthContext.Provider>
   );
 }
 
-// Hook personalizado para facilitar o uso (Dica de Pro)
-export function useAuth() {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuth deve ser usado dentro de um AuthProvider");
-  }
-  return context;
-}
+export const useAuth = () => useContext(AuthContext);

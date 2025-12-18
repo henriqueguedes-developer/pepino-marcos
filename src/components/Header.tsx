@@ -1,47 +1,50 @@
-"use client"; 
+"use client";
 
-import { useAuth } from "@/contexts/AuthContext";
 import Link from "next/link";
+import { useAuth } from "@/contexts/AuthContext";
+
 export default function Header() {
-  const { user, login, logout } = useAuth(); 
+  const { user, logout } = useAuth(); // Repare que tiramos o 'login' daqui
 
   return (
-    <header className="flex items-center justify-between bg-slate-900 px-6 py-4 text-white shadow-md">
-      {/* Título vira um Link para a Home */}
-      <Link href="/" className="hover:opacity-80">
-        <h1 className="text-xl font-bold tracking-wide">Gerenciador de Eventos</h1>
+    <header className="flex h-20 items-center justify-between bg-slate-900 px-8 text-white shadow-md">
+      {/* Logo / Título */}
+      <Link href="/" className="text-xl font-bold tracking-tight hover:text-slate-300 transition">
+        Gerenciador de Eventos
       </Link>
 
-      <nav className="flex items-center gap-4">
-        
-        <Link 
-          href="/events/new"
-          className="text-sm font-medium text-slate-300 hover:text-white hover:underline transition"
-        >
-          + Criar Evento
-        </Link>
-        
-        <div className="h-4 w-px bg-slate-700"></div> {/* Separador visual */}
-
+      {/* Área do Usuário */}
+      <div>
         {user ? (
-          <>
-            <span className="hidden text-sm text-slate-300 sm:block">Olá, {user.name}</span>
-            <button 
+          <div className="flex items-center gap-4">
+            <div className="text-right hidden sm:block">
+              <p className="text-sm font-medium text-white">{user.name}</p>
+              <p className="text-xs text-slate-400">{user.email}</p>
+            </div>
+            
+            <Link 
+              href="/events/new"
+              className="hidden rounded bg-blue-600 px-4 py-2 text-sm font-bold text-white hover:bg-blue-700 sm:inline-block"
+            >
+              + Criar Evento
+            </Link>
+
+            <button
               onClick={logout}
-              className="rounded border border-red-500 px-3 py-1 text-sm text-red-400 transition hover:bg-red-500/10"
+              className="rounded border border-slate-600 px-4 py-2 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition"
             >
               Sair
             </button>
-          </>
+          </div>
         ) : (
-          <button 
-            onClick={login}
-            className="rounded bg-blue-600 px-4 py-2 text-sm font-semibold transition hover:bg-blue-500"
+          <Link
+            href="/login"
+            className="rounded bg-blue-600 px-6 py-2 text-sm font-bold text-white transition hover:bg-blue-700 shadow-lg hover:shadow-blue-500/25"
           >
-            Login (Simulado)
-          </button>
+            Fazer Login
+          </Link>
         )}
-      </nav>
+      </div>
     </header>
   );
 }
