@@ -54,3 +54,35 @@ Para testar as funcionalidades administrativas (Criar e Excluir eventos), utiliz
    ```bash
    git clone [https://github.com/marcos-lima-dev/desafio-tecnico-analista-de-sistemas-Junior-front-end.git](https://github.com/marcos-lima-dev/desafio-tecnico-analista-de-sistemas-Junior-front-end.git)
    cd desafio-tecnico-analista-de-sistemas-Junior-front-end
+Instale as dependências:
+
+Bash
+
+npm install
+Rode o servidor de desenvolvimento:
+
+Bash
+
+npm run dev
+Acesse: abra http://localhost:3000 no seu navegador.
+
+📂 Estrutura do Projeto
+src/
+├── app/              # Rotas e Páginas (App Router)
+│   ├── api/          # Rotas de API (GET, POST, DELETE Mockados)
+│   ├── events/       # Rotas de Eventos (Detalhes e Novo)
+│   └── login/        # Página de Login
+├── components/       # Componentes reutilizáveis (Header, Cards, Toasts)
+├── contexts/         # Gerenciamento de estado e Autenticação
+├── data/             # Persistência de dados em memória (Mock DB)
+├── services/         # Camada de integração com API (Fetch Wrapper)
+├── types/            # Definições de Tipos TypeScript
+└── styles/           # Estilos globais
+📝 Notas do Desenvolvedor
+Persistência de Dados: Como este é um desafio técnico com foco em Front-end, não foi utilizado banco de dados externo. A persistência é feita em memória (src/data/events.ts).
+
+Nota: Ao reiniciar o servidor (ou salvar arquivos em dev mode), os dados criados via navegador são resetados para o estado inicial, enquanto os dados "hardcoded" no arquivo permanecem fixos.
+
+Next.js 15 Compliance: O projeto segue estritamente as novas convenções do Next 15, incluindo o uso de await params em rotas dinâmicas e revalidação de cache sob demanda (router.refresh).
+
+Feito com 💙 por Marcos de Sousa Lima
