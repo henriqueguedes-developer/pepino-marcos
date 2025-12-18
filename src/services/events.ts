@@ -15,7 +15,7 @@ export async function getEvents(query?: string, page: number = 1) {
 
   const url = `${BASE_URL}/events?${params.toString()}`;
 
-  console.log('Fetching URL:', url); // Adicionando log para depuração
+  console.error('DEBUG - Fetching URL:', url); // Forçando o log a aparecer no Vercel
 
   const res = await fetch(url, {
     cache: 'no-store',
